@@ -11,41 +11,19 @@
  */
 class Solution {
 public:
-    TreeNode* insert(TreeNode* root, int val) {
-        TreeNode* n = new TreeNode(val);
-        if(root == NULL){
-            return n;
+    TreeNode* helper(vector<int>& preorder, int& i, int bound){
+        if(i == preorder.size() || preorder[i] > bound){
+            return NULL;
         }
-        stack<TreeNode*> s;
-        s.push(root);
-        TreeNode* temp = s.top();
-        while(!s.empty()){
-            temp = s.top();
-            s.pop();
-            if(temp -> val < val && temp -> right){
-                s.push(temp -> right);
-            }
-            else if(temp -> val > val && temp -> left){
-                s.push(temp -> left);
-            }
-            else{
-                break;
-            }
-        }
-        
-        if(val > temp -> val){
-            temp -> right = n;
-        }
-        else{
-            temp -> left = n;
-        }
-        return root;
+
+        TreeNode* temp = new TreeNode(preorder[i]);
+        i++;
+        temp -> left = helper(preorder, i, temp -> val);
+        temp -> right = helper(preorder, i, bound);
+        return temp;
     }
     TreeNode* bstFromPreorder(vector<int>& preorder) {
-        TreeNode* root = new TreeNode(preorder[0]);
-        for(int i = 1; i < preorder.size(); i++){
-            insert(root, preorder[i]);
-        }
-        return root;
+        int i = 0;
+        return helper(preorder, i, INT_MAX);
     }
 };
