@@ -1,14 +1,17 @@
 class Solution {
 public:
     void dfs(vector<vector<int>>& graph, int i, vector<int>& visited, bool& found){
+        if(found){
+            return;
+        }
         visited[i] = 1;
         for(auto l : graph[i]){
-            if(visited[l] == 0){
-                dfs(graph, l, visited, found);
-            }
             if(visited[l] == 1){
                 found = true;
                 return;
+            }
+            if(visited[l] == 0){
+                dfs(graph, l, visited, found);
             }
         }
         visited[i] = 2;
