@@ -8,7 +8,7 @@ public:
         if(r == 1 && c == 1){
             return 0;
         }
-        
+
         vector<vector<int>> diff(r, vector<int> (c, INT_MAX));
         priority_queue<pair<int, pair<int, int>>, vector<pair<int, pair<int, int>>>, greater<pair<int, pair<int, int>>>> pq;
         pq.push({0, {0, 0}});
@@ -18,6 +18,9 @@ public:
             int tr = pos.first;
             int tc= pos.second;
             pq.pop();
+
+            if(eff > diff[tr][tc]) continue;
+
             vector<int> dr = {1, -1, 0, 0};
             vector<int> dc = {0, 0, -1, 1};
             for(int i = 0; i < 4; i++){
