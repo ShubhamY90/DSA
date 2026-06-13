@@ -4,6 +4,7 @@ public:
         if(i == nums.size() && s == (total)/2) return true;
         else if(i == nums.size()) return false;
         if(dp[i][s] != -1) return dp[i][s];
+        if(s > total/2) return false;
         return (dp[i][s] = (helper(nums, s + nums[i], i + 1, total, dp) || helper(nums, s, i + 1, total, dp)));
     }
     bool canPartition(vector<int>& nums) {
