@@ -2,10 +2,8 @@ class Solution {
 public:
     int findMaximizedCapital(int k, int w, vector<int>& profits, vector<int>& capital) {
         int n = profits.size();
-        unordered_map<int, int> opt;
         vector<vector<int>> cp;
         for(int i = 0; i < n; i++){
-            opt[i] = (profits[i]);
             cp.push_back({capital[i], profits[i], i});
         }
         sort(cp.begin(), cp.end(), [](const vector<int>& a, const vector<int>& b) {
@@ -18,7 +16,7 @@ public:
         bool completed = false;
         priority_queue<int> heap;
         for(int i = 0; i < n; i++){
-            if(cp[i][0] <= val) heap.push(opt[cp[i][2]]);
+            if(cp[i][0] <= val) heap.push(cp[i][1]);
             else{
                 if (heap.empty()){
                     completed = true;
