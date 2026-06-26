@@ -16,7 +16,7 @@ public:
             auto [cost, node] = pq.top();
             pq.pop();
 
-            if (cost > dist[node]) continue;
+            //if (cost > dist[node]) continue;
 
             for (auto &[next, wt] : graph[node]) {
                 int newCost = cost + wt;
