@@ -47,8 +47,15 @@ public:
                 in[i]++;
             }
         }
+
+        //order of group to follow
         vector<int> o1 = order(graph1, in1);
+
+        //order of elements
         vector<int> temp = order(graph, in);
+
+        //ab order of elements le lenge group ke order ke hisaab se 
+        // pahle o1[0] group ke saare elements order mei fir aage ke
         if(o1.size() < 1 || temp.size() < 1) return {};
         unordered_map<int, vector<int>> bucket;
         for(int i = 0; i < temp.size(); i++){
