@@ -11,10 +11,11 @@ public:
 
         vector<double> dist(n, INT_MAX);
         pq.push({0, start_node});
+        dist[start_node] = 0;
         while(!pq.empty()){
             auto [cost, curr] = pq.top();
             pq.pop();
-            if(curr == end_node) return exp(-cost);
+            
             for(auto ne : graph[curr]){
                 if(dist[ne.second] > cost + ne.first){
                     dist[ne.second] = cost + ne.first;
@@ -22,6 +23,7 @@ public:
                 }
             }
         }
+        if(dist[end_node] != INT_MAX) return exp(-dist[end_node]);
         return 0;
     }
 };
