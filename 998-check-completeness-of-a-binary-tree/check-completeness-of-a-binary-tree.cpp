@@ -9,45 +9,37 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+
+/*
+1. my approach check is the element pushed was last 
+    if the curr node has right and no left return false
+    if the current node has only left then this left is the last element
+    now if any further node is seen left or right to any other node return false
+
+2. second approach is just pushing null also any where null is pushed then all  
+    the further should also be null otherwise return false
+*/
+
 class Solution {
 public:
     bool isCompleteTree(TreeNode* root) {
         queue<TreeNode*> q;
         q.push(root);
-        q.push(nullptr);
-        // vector<int> currL;
-        // int h = 0;
-        bool isLast = false;
+
+        bool seenNull = false;
+
         while(!q.empty()){
-            TreeNode* curr = q.front();
+            TreeNode* node = q.front();
             q.pop();
-            if(curr == nullptr){
-                
-                
-                //currL.clear();
-                if(!q.empty()) q.push(nullptr);
+
+            if(node == nullptr){
+                seenNull = true;
             }
             else{
-                //currL.push_back(curr -> val);
-                if(curr -> right){
-                    if(isLast) return false;
-                    //q.push(curr -> right);
-                    if(curr -> left){
-                        q.push(curr -> left);
-                        q.push(curr -> right);
-                    }
-                    else{
-                        return false;
-                    }
-                }
-                else if(curr -> left){
-                    if(isLast) return false;
-                    q.push(curr -> left);
-                    isLast = true;
-                }
-                else{
-                    isLast = true;
-                }
+                if(seenNull) return false;
+
+                q.push(node->left);
+                q.push(node->right);
             }
         }
         return true;
