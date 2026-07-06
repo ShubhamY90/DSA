@@ -51,15 +51,12 @@ public:
     }
 
     TreeNode* deserialize(string data) {
-        cout << data << endl;
         int n = data.length();
         vector<int> preorder(n/4);
         for(int i = 0; i < n - 3; i += 4){
             preorder[i/4] = stoi(data.substr(i, 4));
         }
-        for(int i = 0; i < preorder.size(); i++){
-            cout << preorder[i] << " ";
-        }
+        
         int i = 0;
         return helper(preorder, i, INT_MAX);
     }
