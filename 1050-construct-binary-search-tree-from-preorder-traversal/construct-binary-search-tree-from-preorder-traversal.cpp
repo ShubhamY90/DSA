@@ -11,19 +11,35 @@
  */
 class Solution {
 public:
-    TreeNode* helper(vector<int>& preorder, int& i, int bound){
-        if(i == preorder.size() || preorder[i] > bound){
-            return NULL;
-        }
-
-        TreeNode* temp = new TreeNode(preorder[i]);
-        i++;
-        temp -> left = helper(preorder, i, temp -> val);
-        temp -> right = helper(preorder, i, bound);
-        return temp;
-    }
     TreeNode* bstFromPreorder(vector<int>& preorder) {
-        int i = 0;
-        return helper(preorder, i, INT_MAX);
+        int n = preorder.size();
+        
+        TreeNode* root = new TreeNode(preorder[0]);
+
+        for(int i = 1; i < n; i++){
+            TreeNode* temp = new TreeNode(preorder[i]);
+            TreeNode* curr = root;
+            while(curr){
+                if(temp -> val > curr -> val){
+                    if(!curr -> right){
+                        curr -> right = temp;
+                        break;
+                    }
+                    else{
+                        curr = curr -> right;
+                    }
+                }
+                else{
+                    if(!curr -> left){
+                        curr -> left = temp;
+                        break;
+                    }
+                    else{
+                        curr = curr -> left;
+                    }
+                }
+            }
+        }
+        return root;
     }
 };
