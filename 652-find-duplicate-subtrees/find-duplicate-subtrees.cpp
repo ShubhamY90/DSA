@@ -9,10 +9,21 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+
+ /*
+ pahle store kar liya sabka preorder aur null ke liye # 
+ sabka unique aaega postorder 
+ postorder hi use kiya kyuki subtree tbhi define hoga root pe jab uske left right honge
+ fir unn strings ki frequency store karli (pahle strings store kari thi fir compare kara tha)
+ map store kar liya har string ka koi bhi ek root hi 
+ agar baar baar string aayi tab bhi ek hi root node
+ for jiski freq >= 2 thi unke liye return kar dia mp[string] ye jo root dega
+ */
 class Solution {
 public:
     vector<string> subT;
     unordered_map<string, TreeNode*> mp;
+    unordered_map<string, int> freq;
     string helper(TreeNode* root){
         if(!root) return "#";
 
@@ -24,7 +35,7 @@ public:
             mp[ans] = root;
             
         }
-        subT.push_back(ans);
+        freq[ans]++;
         //cout << ans << endl;
         
         return ans;
@@ -32,15 +43,10 @@ public:
 
     vector<TreeNode*> findDuplicateSubtrees(TreeNode* root) {
         helper(root);
-        int n = subT.size();
         vector<TreeNode*> ans;
-        unordered_map<string, bool> visited;
-        for(int i = 0; i < n; i++){
-            for(int j = i + 1; j < n; j++){
-                if(subT[i] == subT[j] && visited.find(subT[i]) == visited.end()){
-                    visited[subT[i]] = true;
-                    ans.push_back(mp[subT[i]]);
-                }
+        for(auto it : freq){
+            if(it.second >= 2){
+                ans.push_back(mp[it.first]);
             }
         }
         return ans;
