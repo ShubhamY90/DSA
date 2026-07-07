@@ -18,7 +18,6 @@ public:
         vector<int> order;
         for(int i = 1; i <= n; i++){
             if(in[i] == 0){
-                cout << i << endl;
                 q.push(i);
                 order.push_back(i);
             }
