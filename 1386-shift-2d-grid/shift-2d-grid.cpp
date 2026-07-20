@@ -7,7 +7,6 @@ public:
         int t = 0;
         for(int i = 0; i < m; i++){
             for(int j = 0; j < n; j++){
-                cout << (j + k)%n << endl;
                 ans[((t + k)/n)% m][(j + k)%n] = grid[i][j];
                 t++;
             }
