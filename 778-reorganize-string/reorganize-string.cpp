@@ -15,6 +15,7 @@ public:
             for(int i = 0; i < 2; i++){
                 if(!pq.empty()){
                     auto [cF, curr] = pq.top();
+                    if(ans.size() > 0 && ans.back() == curr) return "";
                     ans += curr;
                     cF--;
                     if(cF > 0) temp.push_back({cF, curr});
@@ -27,11 +28,6 @@ public:
                 pq.push(it);
             }
             temp.clear();
-        }
-        for(int i = 1; i < ans.length(); i++){
-            if(ans[i - 1] == ans[i]){
-                return "";
-            }
         }
         return ans;
     }
