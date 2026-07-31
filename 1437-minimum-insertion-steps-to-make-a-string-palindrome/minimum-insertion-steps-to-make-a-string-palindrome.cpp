@@ -1,19 +1,21 @@
 class Solution {
 public:
-    int minInsertions(string s) {
-        vector<vector<int>> dp(s.length() + 1, vector<int>(s.length() + 1, 0));
-        string s1 = s;
-        reverse(s1.begin(), s1.end());
-        for(int i = 1; i <= s.length(); i++){
-            for(int j = 1; j <= s.length(); j++){
-                if(s[i - 1] == s1[j - 1]){
-                    dp[i][j] = dp[i - 1][j - 1] + 1;
-                }
-                else{
-                    dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
-                }
-            }
+    int dp[501][501];
+    int helper(string &s, int i, int j){
+        if(i > j) return 0;
+
+        //if odd
+        if(i == j) return 1;
+
+        if(dp[i][j] != -1) return dp[i][j];
+        if(s[i] == s[j]){
+            return dp[i][j] = 2 + helper(s, i + 1, j - 1);
         }
-        return s.length() - dp[s.length()][s.length()];
+
+        return dp[i][j] = max(helper(s, i + 1, j), helper(s, i, j - 1));
+    }
+    int minInsertions(string s) {
+        memset(dp, -1, sizeof(dp));
+        return (int)s.length() - helper(s, 0, (int)s.length() - 1);
     }
 };
