@@ -8,7 +8,7 @@ public:
         }
 
         priority_queue<pair<double, int>> pq;
-        vector<double> dist(n, INT_MIN);
+        vector<double> dist(n, 0.0);
         pq.push({1.0, start_node});
         dist[start_node] = 1;
         while(!pq.empty()){
@@ -27,7 +27,6 @@ public:
             }
         }
 
-        if(dist[end_node]==INT_MIN) return 0;
         return dist[end_node];
     }
 };
