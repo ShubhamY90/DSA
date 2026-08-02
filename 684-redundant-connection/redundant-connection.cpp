@@ -1,31 +1,34 @@
-class DSU {
+class DSU{
 public:
-    vector<int> parent, sz;
+    vector<int> parent;
+    vector<int> size;
     DSU(int n){
-        sz.resize(n + 1);
-        parent.resize(n + 1, 1);
-        for(int i = 1; i <= n; i++){
+        parent.resize(n);
+        size.resize(n, 1);
+        for(int i = 0; i < n; i++){
             parent[i] = i;
         }
     }
 
-    int find(int x){
-        if(parent[x] == x) return x;
-
-        return parent[x] = find(parent[x]);
+    int find(int u){
+        if(parent[u] == u){
+            return u;
+        }
+        return parent[u] = find(parent[u]);
     }
 
-    bool unite(int a, int b){
-        int pa = find(a);
-        int pb = find(b);
+    bool unite(int u, int v){
+        int pu = find(u);
+        int pv = find(v);
 
-        if(pa == pb) return false;
+        if(pu == pv) return false;
 
-        if(sz[pa] < sz[pb]){
-            swap(pa, pb);
+        if(size[pv] > size[pu]){
+            swap(pu, pv);
         }
-        parent[pb] = pa;
-        sz[pa]++;
+
+        size[pu] += size[pv];
+        parent[pv] = pu;
         return true;
     }
 };
@@ -36,9 +39,7 @@ public:
         DSU dsu(n);
 
         for(auto e : edges){
-            if(!dsu.unite(e[0], e[1])){
-                return e;
-            }
+            if(!dsu.unite(e[0] - 1, e[1] - 1)) return e;
         }
         return {};
     }
