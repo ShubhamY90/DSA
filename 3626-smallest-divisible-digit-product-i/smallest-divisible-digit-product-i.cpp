@@ -10,7 +10,7 @@ public:
         return ans;
     }
     int smallestNumber(int n, int t) {
-        for(int i = n; i <= 200; i++){
+        for(int i = n; i <= 108; i++){
             int temp = helper(i);
             if(temp%t == 0) return i;
         }
