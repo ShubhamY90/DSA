@@ -1,27 +1,19 @@
 class Solution {
 public:
-    int helper(vector<int> nums, int i, bool prev, vector<vector<int>>& dp){
-        if(i == nums.size()) return 0;
+    int dp[101][2];
+    int helper(vector<int>& nums, bool prev, int i){
+        int n = nums.size();
+        if(i == n) return 0;
+        int ans = INT_MIN;
         if(dp[i][prev] != -1) return dp[i][prev];
-        if(prev) return dp[i][prev] = helper(nums, i + 1, false, dp);
-        int skip = helper(nums, i + 1, false, dp);
-        int take = nums[i] + helper(nums, i + 1, true, dp);
-        return dp[i][prev] = max(skip, take);
+        if(!prev){
+            ans = max(ans, nums[i] + helper(nums, true, i + 1));
+        }
+        ans = max(ans, helper(nums, false, i + 1));
+        return dp[i][prev] = ans;
     }
     int rob(vector<int>& nums) {
-        int n = nums.size();
-        vector<vector<int>> dp(n + 1, vector<int>(2, 0));
-        bool prev = false;
-        dp[n][0] = 0;
-        dp[n][1] = 0;
-        for(int i = n - 1; i >= 0; i--){
-            dp[i][1] = dp[i + 1][0];
-            
-            dp[i][0] = max(dp[i + 1][0], nums[i] + dp[i + 1][1]);
-            
-        }
-        return max(dp[0][0], dp[0][1]);
-
-        return helper(nums, 0, false, dp);
+        memset(dp, -1, sizeof(dp));
+        return helper(nums, false, 0);
     }
 };
